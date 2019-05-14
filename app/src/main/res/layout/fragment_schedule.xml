@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="0dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/schedule_tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:paddingHorizontal="5dp"
+                android:paddingVertical="5dp"
+                android:text="@string/schedule"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:background="@color/transparent"
+                android:textColor="@color/transparent_white"/>
+
+            <CalendarView
+                android:id="@+id/schedule_cv_events"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/schedule_tv_title"
+                android:background="@color/transparent"
+                android:textColor="@color/transparent_white"
+                android:firstDayOfWeek="2" />
+
+            <TextView
+                android:id="@+id/schedule_tv_dateSelected"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/schedule_cv_events"
+                android:layout_margin="5dp"
+                android:gravity="center"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:text="DATE"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:background="@color/transparent"
+                android:textColor="@color/transparent_white"/>
+
+            <EditText
+                android:id="@+id/schedule_et_entry"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/schedule_tv_dateSelected"
+                android:background="@color/transparent"
+                android:textColorHint="@color/transparent_white"
+
+                android:ems="10"
+                android:gravity="start"
+                android:hint="@string/editTextScheduleEvent"
+                android:inputType="textMultiLine"
+                android:maxLines="10"
+                android:minLines="4"
+                android:padding="5dp" />
+
+            <TextView
+                android:id="@+id/schedule_tv_yourWeek"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/schedule_et_entry"
+                android:layout_margin="5dp"
+                android:gravity="center"
+                android:text="ADD AN EVENT TO YOUR SCHEDULE"
+                android:background="@color/transparent"
+                android:textColor="@color/transparent_white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/schedule_rv_allevents"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/schedule_tv_yourWeek"
+                android:layout_marginTop="17dp"
+                android:background="@color/transparent"
+                android:scrollbars="vertical">
+
+            </android.support.v7.widget.RecyclerView>
+        </RelativeLayout>
+    </ScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/schedule_fab_addSchedule"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
+        android:src="@drawable/ic_create" />
+
+</RelativeLayout>

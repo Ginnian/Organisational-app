@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/jourrnalEntry_et_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="6dp"
+        android:layout_margin="5dp"
+        android:background="@color/transparent"
+        android:textColorHint="@color/transparent_white"
+        android:hint="Title"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/journalEntry_et_subject"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/jourrnalEntry_et_title"
+        android:layout_margin="6dp"
+        android:hint="Subject"
+        android:background="@color/transparent"
+        android:textColorHint="@color/transparent_white"
+        android:inputType="text"
+        android:padding="6dp"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/journalEntry_et_entry"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/journalEntry_et_subject"
+        android:layout_margin="6dp"
+        android:gravity="start"
+        android:hint="Start typing..."
+        android:background="@color/transparent"
+        android:textColorHint="@color/transparent_white"
+        android:imeOptions="actionDone"
+        android:inputType="textMultiLine"
+        android:maxLines="10"
+        android:minLines="10"
+        android:padding="6dp"
+        android:textSize="20sp" />
+
+    <Spinner
+        android:id="@+id/spinnerCategorise"
+        android:layout_width="90dp"
+        android:layout_height="40dp"
+        android:layout_below="@+id/jourrnalEntry_et_title"
+        android:layout_alignParentRight="true"
+        android:layout_margin="6dp"
+        android:background="@color/transparent"
+        android:textColorHint="@color/transparent_white"/>
+
+    <TextView
+        android:id="@+id/journalEntry_tv_savedentry"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/journalEntry_et_entry"
+        android:layout_margin="6dp"
+        android:background="@color/transparent"
+        android:textColorHint="@color/transparent_white"
+        android:gravity="start"
+        android:inputType="textMultiLine"
+        android:maxLines="10"
+        android:minLines="10"
+        android:paddingLeft="5dp"
+        android:textSize="20sp" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/journalEntry_fab_addJournal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
+        android:src="@drawable/ic_create" />
+
+</RelativeLayout>

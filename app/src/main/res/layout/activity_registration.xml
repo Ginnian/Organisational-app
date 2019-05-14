@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gunmetal_grey"
+    android:orientation="vertical"
+    tools:context=".LoginRegister.RegistrationActivity">
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/registration_layout_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="200dp">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/registration_et_username"
+            android:layout_width="290dp"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/user_icon"
+            android:drawablePadding="5dp"
+            android:hint="@string/loginHint"
+            android:inputType="text"/>
+    </android.support.design.widget.TextInputLayout>
+
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/registration_layout_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/registration_layout_username"
+        android:layout_alignLeft="@+id/registration_layout_username"
+        app:passwordToggleEnabled="true"
+        android:layout_marginTop="15dp">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/registration_et_password"
+            android:layout_width="290dp"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/password_icon"
+            android:drawableLeft="@drawable/password_icon"
+            android:drawablePadding="5dp"
+            android:hint="@string/passwordHint"
+            android:inputType="textPassword" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/registration_layout_confirmPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/registration_layout_password"
+        android:layout_alignLeft="@+id/registration_layout_password"
+        app:passwordToggleEnabled="true"
+        android:layout_marginTop="15dp">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/registration_et_confirmPassword"
+            android:layout_width="290dp"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/password_icon"
+            android:drawableLeft="@drawable/password_icon"
+            android:drawablePadding="5dp"
+            android:hint="@string/confirm_password"
+            android:inputType="textPassword"
+            />
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:id="@+id/registration_btn_register"
+        android:layout_width="295dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/registration_layout_confirmPassword"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/button_border"
+        android:text="@string/registerButton" />
+
+    <TextView
+        android:id="@+id/registration_tv_returnToLogin"
+        android:layout_width="295dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:textSize="15sp"
+        android:text="@string/already_registered_sign_in"
+        android:textStyle="bold" />
+
+</RelativeLayout>
