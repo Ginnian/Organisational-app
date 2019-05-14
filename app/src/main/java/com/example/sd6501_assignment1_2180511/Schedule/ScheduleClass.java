@@ -1,5 +1,6 @@
 package com.example.sd6501_assignment1_2180511.Schedule;
 
+import com.example.sd6501_assignment1_2180511.LoginRegister.UserClass;
 import com.example.sd6501_assignment1_2180511.R;
 
 public class ScheduleClass {
@@ -21,7 +22,10 @@ public class ScheduleClass {
             + KEY_SCHEDULE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + KEY_SCHEDULE_ENTRY + " TEXT,"
             + KEY_SCHEDULE_SUBJECT + " TEXT,"
-            + KEY_SCHEDULE_NOTIFYEVENT + " TEXT" + ")";
+            + KEY_SCHEDULE_NOTIFYEVENT + " TEXT"
+            + UserClass.KEY_USER_ID + " INTEGER,"
+            + "FOREIGN KEY(" + UserClass.KEY_USER_ID
+            + ") REFERENCES(" + UserClass.TABLE_USERS + "))";
 
     public ScheduleClass() {
         this.imageResource = R.drawable.ic_schedule;

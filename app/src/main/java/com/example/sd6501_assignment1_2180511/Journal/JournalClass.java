@@ -1,5 +1,6 @@
 package com.example.sd6501_assignment1_2180511.Journal;
 
+import com.example.sd6501_assignment1_2180511.LoginRegister.UserClass;
 import com.example.sd6501_assignment1_2180511.R;
 
 public class JournalClass {
@@ -24,7 +25,10 @@ public class JournalClass {
             + KEY_JOURNAL_ENTRY + " TEXT,"
             + KEY_JOURNAL_SUBJECT + " TEXT,"
             + KEY_JOURNAL_TIMESTAMP + " DATETIME DEFAULT CURRENT_TIMESTAMP"
-            + KEY_JOURNAL_TITLE + " TEXT" + ")";
+            + KEY_JOURNAL_TITLE + " TEXT,"
+            + UserClass.KEY_USER_ID + " INTEGER,"
+            + "FOREIGN KEY(" + UserClass.KEY_USER_ID
+            + ") REFERENCES(" + UserClass.TABLE_USERS + "))";
 
     //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     //String strDate = sdf.format(new Date());

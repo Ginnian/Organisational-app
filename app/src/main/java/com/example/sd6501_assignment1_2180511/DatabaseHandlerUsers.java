@@ -8,21 +8,21 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
 
+import com.example.sd6501_assignment1_2180511.Journal.JournalClass;
 import com.example.sd6501_assignment1_2180511.LoginRegister.UserClass;
+import com.example.sd6501_assignment1_2180511.Schedule.ScheduleClass;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class DatabaseHandlerUsers extends SQLiteOpenHelper {
-    private static final int DB_VERSION = 1;
-    private static final String DATABASE_NAME = "usersdb";
-//    private static final String T
-
-    //User table column names
-    
     //debugging
     private static final String TAG = "DatabaseHandlerUsers";
+
+    //database info
+    private static final int DB_VERSION = 1;
+    private static final String DATABASE_NAME = "usersdb";
 
     public DatabaseHandlerUsers(Context context) {
         super(context, DATABASE_NAME, null , DB_VERSION);
@@ -30,13 +30,17 @@ public class DatabaseHandlerUsers extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        Log.d(TAG, "onCreate: Trying to create a new database");
+        Log.d(TAG, "onCreate: Trying to create new tables");
         db.execSQL(UserClass.CREATE_TABLE);
+        db.execSQL(JournalClass.CREATE_TABLE);
+        db.execSQL(ScheduleClass.CREATE_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + UserClass.TABLE_USERS);
+        db.execSQL("DROP TABLE IF EXISTS " + JournalClass.TABLE_JOURNAL);
+        db.execSQL("DROP TABLE IF EXISTS " + ScheduleClass.TABLE_SCHEDULE);
         onCreate(db);
     }
 
@@ -159,28 +163,5 @@ public class DatabaseHandlerUsers extends SQLiteOpenHelper {
         db.close();
 
         return listUsers;
-    }
-
-    public UserClass authenticateUser(UserClass user) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(UserClass.TABLE_USERS,
-                                 new String[]{UserClass.KEY_USER_ID, UserClass.KEY_USERNAME,
-                                         UserClass.KEY_PASSWORD, UserClass.KEY_EMAIL},
-                UserClass.KEY_EMAIL + "=?",
-                                 new String[]{UserClass.KEY_EMAIL},
-                                null, null, null);
-
-        if (cursor != null && cursor.moveToFirst() && cursor.getCount()>0) {
-            UserClass user1 = new UserClass(cursor.getInt(0),
-                                            cursor.getString(1),
-                                            cursor.getString(2),
-                                            cursor.getString(3));
-
-            //check passwords
-            if (user.getPassword().equalsIgnoreCase(user1.getPassword())) {
-                return user1;
-            }
-        }
-        return null;
     }
 }

@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.sd6501_assignment1_2180511.DatabaseHandlerUsers;
 import com.example.sd6501_assignment1_2180511.MainActivity;
@@ -35,8 +36,8 @@ public class LoginActivity extends AppCompatActivity {
     //Registration
 //    HashMap<String, String> logInInfo = new HashMap<>();
     ArrayList<UserClass> users;
-    protected static int registrationRequestCode = 1;
     long newUserID;
+    protected static int registrationRequestCode = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,8 +103,11 @@ public class LoginActivity extends AppCompatActivity {
     private void checkLogin(String userName, String userPassword) {
         for (UserClass user : users) {
             if((user.getEmail().equals(userName)) && (user.getPassword().equals(userPassword))) {
+//                Toast.makeText(this, "Log in successful", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(this, MainActivity.class);
+                intent.putExtra("userID", user.getId());
                 startActivity(intent);
+                finish();
             }
         }
         incorrectLogin.setText("Incorrect login information");

@@ -152,15 +152,5 @@ public class RegistrationActivity extends AppCompatActivity {
         loginActivity.putExtra("userID", userID);
         setResult(loginResultCode, loginActivity);
         finish();
-
-//        Intent loginActivity = new Intent();
-//        loginActivity.putExtra("HashMap", userDetails);
-//        setResult(loginResultCode, loginActivity);
-//        finish();
-
-//        Intent intent = new Intent();
-//        intent.putExtra("UserClass", user);
-//        setResult(loginResultCode, intent);
-//        finish();
     }
 }
