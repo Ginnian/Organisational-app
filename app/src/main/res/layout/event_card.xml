@@ -7,7 +7,9 @@
     app:cardCornerRadius="5dp"
     android:layout_margin="5dp"
     android:layout_marginBottom="15dp"
-    app:cardBackgroundColor="@color/dark_gray">
+    app:cardBackgroundColor="@color/dark_gray"
+    app:cardPreventCornerOverlap="false"
+    android:background="@android:drawable/dialog_holo_light_frame">
     
     <RelativeLayout
         android:layout_width="match_parent"

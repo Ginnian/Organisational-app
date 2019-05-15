@@ -13,10 +13,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.sd6501_assignment1_2180511.DatabaseHandlerUsers;
-import com.example.sd6501_assignment1_2180511.MainActivity;
+import com.example.sd6501_assignment1_2180511.Home.MainActivity;
 import com.example.sd6501_assignment1_2180511.R;
 
 import java.util.ArrayList;

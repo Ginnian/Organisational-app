@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/gunmetal_grey">
 
     <TextView
         android:id="@+id/home_tv_title"
@@ -9,15 +10,43 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerInParent="true"
-        android:text="//Collect fragment entries"
-        android:textSize="20sp" />
+        android:text="YOUR ENTRIES"
+        android:textColor="@color/transparent_white"
+        android:textSize="30sp" />
 
-    <ExpandableListView
-        android:id="@+id/home_evl_overview"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/home_tv_title"
-        android:divider="@color/colorPrimary">
+        android:fillViewport="true">
 
-    </ExpandableListView>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/home_tv_title">
+
+            <android.support.v4.view.ViewPager
+                android:foregroundGravity="center"
+                android:id="@+id/home_vp_schedule"
+                android:layout_alignParentLeft="true"
+                android:overScrollMode="never"
+                android:clipToPadding="false"
+                android:layout_width="match_parent"
+                android:layout_height="250dp">
+            </android.support.v4.view.ViewPager>
+
+            <android.support.v4.view.ViewPager
+                android:foregroundGravity="center"
+                android:id="@+id/home_vp_journal"
+                android:layout_alignParentLeft="true"
+                android:overScrollMode="never"
+                android:clipToPadding="false"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_below="@+id/home_vp_schedule">
+            </android.support.v4.view.ViewPager>
+
+        </RelativeLayout>
+
+    </ScrollView>
 </RelativeLayout>

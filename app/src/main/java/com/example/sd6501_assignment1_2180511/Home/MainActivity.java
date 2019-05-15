@@ -1,4 +1,4 @@
-package com.example.sd6501_assignment1_2180511;
+package com.example.sd6501_assignment1_2180511.Home;
 
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -11,10 +11,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.sd6501_assignment1_2180511.Journal.JournalFragment;
+import com.example.sd6501_assignment1_2180511.R;
 import com.example.sd6501_assignment1_2180511.Schedule.ScheduleFragment;
 import com.example.sd6501_assignment1_2180511.ToDo.ToDoFragment;
 
 public class MainActivity extends AppCompatActivity {
+    //debug
+    private static final String TAG = "MainActivity";
+
     EditText title;
     EditText subject;
     EditText entry;
