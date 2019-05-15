@@ -4,6 +4,7 @@ import com.example.sd6501_assignment1_2180511.LoginRegister.UserClass;
 import com.example.sd6501_assignment1_2180511.R;
 
 public class JournalClass {
+    private long id;
     private int imageResource;
     private String entry;
     private String subject;
@@ -24,11 +25,11 @@ public class JournalClass {
             + KEY_JOURNAL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + KEY_JOURNAL_ENTRY + " TEXT,"
             + KEY_JOURNAL_SUBJECT + " TEXT,"
-            + KEY_JOURNAL_TIMESTAMP + " DATETIME DEFAULT CURRENT_TIMESTAMP"
+            + KEY_JOURNAL_TIMESTAMP + " DATETIME DEFAULT (datetime('now', 'localtime')),"
             + KEY_JOURNAL_TITLE + " TEXT,"
             + UserClass.KEY_USER_ID + " INTEGER,"
             + "FOREIGN KEY(" + UserClass.KEY_USER_ID
-            + ") REFERENCES(" + UserClass.TABLE_USERS + "))";
+            + ") REFERENCES " + UserClass.TABLE_USERS + "(" + KEY_JOURNAL_ID +"))";
 
     //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     //String strDate = sdf.format(new Date());
@@ -44,12 +45,21 @@ public class JournalClass {
         this.title = "Default title";
     }
 
-    public JournalClass(int imageResource, String entry, String subject, String date, String title) {
-        this.imageResource = imageResource;
+    public JournalClass(long id, String entry, String subject, String date, String title) {
+        this.id = id;
+        this.imageResource = R.drawable.ic_schedule;
         this.entry = entry;
         this.subject = subject;
         this.date = date;
         this.title = title;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public int getImageResource() {
@@ -58,14 +68,6 @@ public class JournalClass {
 
     public void setImageResource(int imageResource) {
         this.imageResource = imageResource;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public String getEntry() {
@@ -90,5 +92,13 @@ public class JournalClass {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

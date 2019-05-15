@@ -16,6 +16,7 @@ import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.sd6501_assignment1_2180511.DraftScheduleAdapter;
 import com.example.sd6501_assignment1_2180511.R;
 
 import java.util.ArrayList;
@@ -93,7 +94,7 @@ public class ScheduleFragment extends Fragment {
     public void buildRecyclerLayout() {
         rv.setHasFixedSize(true);
         rvLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
-        rvAdapter = new ScheduleAdapter(events);
+        rvAdapter = new DraftScheduleAdapter(events);
         rv.setLayoutManager(rvLayoutManager);
         rv.setAdapter(rvAdapter);
     } //Build event layout for the recycler view

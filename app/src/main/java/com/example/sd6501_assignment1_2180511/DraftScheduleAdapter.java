@@ -1,4 +1,4 @@
-package com.example.sd6501_assignment1_2180511.Schedule;
+package com.example.sd6501_assignment1_2180511;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,11 +7,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.sd6501_assignment1_2180511.R;
+import com.example.sd6501_assignment1_2180511.Schedule.ScheduleClass;
 
 import java.util.ArrayList;
 
-public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHolder> {
+public class DraftScheduleAdapter extends RecyclerView.Adapter<DraftScheduleAdapter.ViewHolder> {
     ArrayList<ScheduleClass> recycleList;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -28,7 +28,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
             dateTV = itemView.findViewById(R.id.cardEvent_tv_date);
         }
     }
-    public ScheduleAdapter(ArrayList<ScheduleClass> eventList) {
+    public DraftScheduleAdapter(ArrayList<ScheduleClass> eventList) {
         recycleList = eventList;
     }
 

@@ -1,4 +1,4 @@
-package com.example.sd6501_assignment1_2180511.Home;
+package com.example.sd6501_assignment1_2180511.Schedule;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -14,12 +14,12 @@ import com.example.sd6501_assignment1_2180511.Schedule.ScheduleClass;
 
 import java.util.List;
 
-public class Adapter extends PagerAdapter {
+public class ScheduleCardAdapter extends PagerAdapter {
     private List<ScheduleClass> schedules;
     private LayoutInflater layoutInflater;
     private Context context;
 
-    public Adapter(List<ScheduleClass> schedules, Context context) {
+    public ScheduleCardAdapter(List<ScheduleClass> schedules, Context context) {
         this.schedules = schedules;
         this.context = context;
     }

@@ -4,6 +4,7 @@ import com.example.sd6501_assignment1_2180511.LoginRegister.UserClass;
 import com.example.sd6501_assignment1_2180511.R;
 
 public class ScheduleClass {
+    private int id;
     private int imageResource;
     private String entry;
     private String subject;
@@ -25,7 +26,7 @@ public class ScheduleClass {
             + KEY_SCHEDULE_NOTIFYEVENT + " TEXT"
             + UserClass.KEY_USER_ID + " INTEGER,"
             + "FOREIGN KEY(" + UserClass.KEY_USER_ID
-            + ") REFERENCES(" + UserClass.TABLE_USERS + "))";
+            + ") REFERENCES " + UserClass.TABLE_USERS + "(" + UserClass.KEY_USER_ID +"))";
 
     public ScheduleClass() {
         this.imageResource = R.drawable.ic_schedule;
@@ -34,11 +35,20 @@ public class ScheduleClass {
         this.date = "Today";
     }
 
-    public ScheduleClass(int imageResource, String entry, String subject, String date) {
+    public ScheduleClass(int id, int imageResource, String entry, String subject, String date) {
+        this.id = id;
         this.imageResource = imageResource;
         this.entry = entry;
         this.subject = subject;
         this.date = date;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getImageResource() {

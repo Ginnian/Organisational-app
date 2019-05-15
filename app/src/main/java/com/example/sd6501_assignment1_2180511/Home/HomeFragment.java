@@ -1,6 +1,5 @@
 package com.example.sd6501_assignment1_2180511.Home;
 
-import android.animation.ArgbEvaluator;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,7 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.sd6501_assignment1_2180511.Journal.JournalCardAdapter;
+import com.example.sd6501_assignment1_2180511.Journal.JournalClass;
 import com.example.sd6501_assignment1_2180511.R;
+import com.example.sd6501_assignment1_2180511.Schedule.ScheduleCardAdapter;
 import com.example.sd6501_assignment1_2180511.Schedule.ScheduleClass;
 
 import java.util.ArrayList;
@@ -18,12 +20,16 @@ import java.util.List;
 
 public class HomeFragment extends Fragment {
     private static final String TAG = "HomeFragment";
-//    ExpandableListView elv;
-    ViewPager viewPager;
-    Adapter adapter;
+
+    //schedule
+    ViewPager viewPagerSchedule;
+    ScheduleCardAdapter adapterSchedule;
     List<ScheduleClass> schedules;
-    Integer[] colors = null;
-    ArgbEvaluator argbEvaluator = new ArgbEvaluator();
+
+    //journal
+    ViewPager viewPagerJournal;
+    JournalCardAdapter adapterJournal;
+    List<JournalClass> journals;
 
     @Nullable
     @Override
@@ -37,16 +43,27 @@ public class HomeFragment extends Fragment {
         schedules.add(new ScheduleClass());
         schedules.add(new ScheduleClass());
 
-        adapter = new Adapter(schedules, getActivity().getApplicationContext());
+        adapterSchedule = new ScheduleCardAdapter(schedules, getActivity().getApplicationContext());
+        viewPagerSchedule = v.findViewById(R.id.home_vp_schedule);
+        viewPagerSchedule.setAdapter(adapterSchedule);
+        viewPagerSchedule.setPadding(0,0,130,0);
 
-        viewPager = v.findViewById(R.id.home_vp_schedule);
-        viewPager.setAdapter(adapter);
-        viewPager.setPadding(0,0,130,0);
+        journals = new ArrayList<>();
+        journals.add(new JournalClass());
+        journals.add(new JournalClass());
+        journals.add(new JournalClass());
+        journals.add(new JournalClass());
+        journals.add(new JournalClass());
 
-        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        adapterJournal = new JournalCardAdapter(journals, getActivity().getApplicationContext());
+        viewPagerJournal = v.findViewById(R.id.home_vp_journal);
+        viewPagerJournal.setAdapter(adapterJournal);
+        viewPagerJournal.setPadding(0,0,130,0);
+
+        viewPagerJournal.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {
-                viewPager.setBackgroundColor(getResources().getColor(R.color.transparent));
+
             }
 
             @Override
@@ -59,9 +76,24 @@ public class HomeFragment extends Fragment {
 
             }
         });
-//        elv = v.findViewById(R.id.home_evl_overview);
 
-        //create and display list of entries
+        viewPagerSchedule.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int i, float v, int i1) {
+                viewPagerSchedule.setBackgroundColor(getResources().getColor(R.color.transparent));
+            }
+
+            @Override
+            public void onPageSelected(int i) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int i) {
+
+            }
+        });
+
         //sort by date
         //sort by category
 

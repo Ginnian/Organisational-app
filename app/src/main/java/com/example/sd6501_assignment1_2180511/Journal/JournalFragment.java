@@ -11,7 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.sd6501_assignment1_2180511.DatabaseHandlerUsers;
+import com.example.sd6501_assignment1_2180511.Home.MainActivity;
 import com.example.sd6501_assignment1_2180511.R;
 
 public class JournalFragment extends Fragment {
@@ -29,6 +32,10 @@ public class JournalFragment extends Fragment {
         userEntryDetails = new JournalClass();
 
         findViews(v);
+
+        //get session id
+        MainActivity mainActivity = (MainActivity) getActivity();
+        final long userID = mainActivity.getUserID();
 
         entry.setOnKeyListener(new View.OnKeyListener() {
             @Override
@@ -50,14 +57,10 @@ public class JournalFragment extends Fragment {
             public void onClick(View v) {
                 saveJournalEntryDetails();
                 savedEntry.setText(userEntryDetails.getEntry());
+//                saveJournalToDB(userID);
 
-//                DatabaseHandlerJournal dbhandler =
-//                        new DatabaseHandlerJournal(getActivity().getApplicationContext());
-//                dbhandler.insertJournalDetails( userEntryDetails.getTitle(),
-//                                                userEntryDetails.getSubject(),
-//                                                userEntryDetails.getDate(),
-//                                                userEntryDetails.getEntry(),
-//                                                userEntryDetails.getImageResource() );
+                Toast.makeText(getActivity().getApplicationContext(), "Entry saved", Toast.LENGTH_SHORT).show();
+                resetTextFields();
             }
         });
 
@@ -76,5 +79,20 @@ public class JournalFragment extends Fragment {
         userEntryDetails.setEntry(entry.getText().toString().trim());
         userEntryDetails.setTitle(title.getText().toString().trim());
         userEntryDetails.setSubject(subject.getText().toString().trim());
+    }
+
+    private void saveJournalToDB(long userID) {
+//        DatabaseHandlerUsers dbhandler = new DatabaseHandlerUsers(getActivity().getApplicationContext());
+//        dbhandler.insertJournal( userID,
+//                                 userEntryDetails.getEntry(),
+//                                 userEntryDetails.getSubject(),
+//                                 userEntryDetails.getDate(),
+//                                 userEntryDetails.getTitle());
+    }
+
+    private void resetTextFields() {
+        title.setText(null);
+        subject.setText(null);
+        entry.setText(null);
     }
 }

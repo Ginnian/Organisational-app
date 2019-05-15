@@ -32,15 +32,15 @@ public class DatabaseHandlerUsers extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         Log.d(TAG, "onCreate: Trying to create new tables");
         db.execSQL(UserClass.CREATE_TABLE);
-        db.execSQL(JournalClass.CREATE_TABLE);
-        db.execSQL(ScheduleClass.CREATE_TABLE);
+//        db.execSQL(JournalClass.CREATE_TABLE);
+//        db.execSQL(ScheduleClass.CREATE_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + UserClass.TABLE_USERS);
-        db.execSQL("DROP TABLE IF EXISTS " + JournalClass.TABLE_JOURNAL);
-        db.execSQL("DROP TABLE IF EXISTS " + ScheduleClass.TABLE_SCHEDULE);
+//        db.execSQL("DROP TABLE IF EXISTS " + JournalClass.TABLE_JOURNAL);
+//        db.execSQL("DROP TABLE IF EXISTS " + ScheduleClass.TABLE_SCHEDULE);
         onCreate(db);
     }
 
@@ -163,5 +163,143 @@ public class DatabaseHandlerUsers extends SQLiteOpenHelper {
         db.close();
 
         return listUsers;
+    }
+
+    //journals
+    public long insertJournal (long id, String entry, String subject,
+                               String timestamp, String title) {
+        Log.d(TAG, "addUser: Trying to add a journal to database");
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues cValues = new ContentValues();
+        cValues.put(JournalClass.KEY_JOURNAL_ENTRY, entry);
+        cValues.put(JournalClass.KEY_JOURNAL_SUBJECT, subject);
+        cValues.put(JournalClass.KEY_JOURNAL_TIMESTAMP, timestamp);
+        cValues.put(JournalClass.KEY_JOURNAL_TITLE, title);
+        cValues.put(UserClass.KEY_USER_ID, id);
+
+        long rowID = db.insert(JournalClass.TABLE_JOURNAL, null, cValues);
+        db.close();
+
+        return rowID;
+    }
+
+    public JournalClass getJournalByID(long id) {
+        //debug
+        Log.d(TAG, "getUser: Trying to retrieve journal from database");
+
+        //read only database
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(JournalClass.TABLE_JOURNAL,
+                new String[]{JournalClass.KEY_JOURNAL_ID, JournalClass.KEY_JOURNAL_ENTRY,
+                        JournalClass.KEY_JOURNAL_SUBJECT, JournalClass.KEY_JOURNAL_TIMESTAMP,
+                        JournalClass.KEY_JOURNAL_TITLE},
+                JournalClass.KEY_JOURNAL_ID + "=?",
+                new String[]{String.valueOf(id)},
+                null, null, null, null);
+
+        if (cursor != null)
+            cursor.moveToFirst();
+
+        // prepare user object
+        JournalClass journal = new JournalClass(
+                cursor.getInt(cursor.getColumnIndex(JournalClass.KEY_JOURNAL_ID)),
+                cursor.getString(cursor.getColumnIndex(JournalClass.KEY_JOURNAL_ENTRY)),
+                cursor.getString(cursor.getColumnIndex(JournalClass.KEY_JOURNAL_SUBJECT)),
+                cursor.getString(cursor.getColumnIndex(JournalClass.KEY_JOURNAL_TIMESTAMP)),
+                cursor.getString(cursor.getColumnIndex(JournalClass.KEY_JOURNAL_TITLE)));
+
+        cursor.close();
+
+        return journal;
+    }
+
+    public void updateJournal(JournalClass journal) {
+        Log.d(TAG, "updateUser: Trying to update journal in database");
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues cValues = new ContentValues();
+        cValues.put(JournalClass.KEY_JOURNAL_ENTRY, journal.getEntry());
+        cValues.put(JournalClass.KEY_JOURNAL_SUBJECT, journal.getSubject());
+        cValues.put(JournalClass.KEY_JOURNAL_TIMESTAMP, journal.getDate());
+        cValues.put(JournalClass.KEY_JOURNAL_TITLE, journal.getTitle());
+
+        db.update(JournalClass.TABLE_JOURNAL,
+                cValues, JournalClass.KEY_JOURNAL_ID + "=?",
+                new String[]{String.valueOf(journal.getId())});
+        db.close();
+    }
+
+    public void deleteJournal(JournalClass journal) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        //delete record by user ID
+        db.delete(JournalClass.TABLE_JOURNAL, JournalClass.KEY_JOURNAL_ID + "=?",
+                new String[]{String.valueOf(journal.getId())});
+        db.close();
+    }
+
+    public int getJournalCount() {
+        String countQuery = "SELECT  * FROM " + JournalClass.TABLE_JOURNAL;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+
+        int count = cursor.getCount();
+        cursor.close();
+
+        return count;
+    }
+
+    public ArrayList<JournalClass> getAllJournalsFromDB() {
+        ArrayList<JournalClass> listJournals = new ArrayList<>();
+
+        String query = "SELECT * FROM " + JournalClass.TABLE_JOURNAL;
+        //String query = "SELECT username, password, email FROM " + TABLE_NAME;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+
+        // looping through all rows and add to list
+        if (cursor.moveToFirst()) {
+            do {JournalClass journal = new JournalClass();
+                journal.setId(cursor.getInt(cursor.getColumnIndex(UserClass.KEY_USER_ID)));
+                journal.setEntry(cursor.getString(cursor.getColumnIndex(UserClass.KEY_USERNAME)));
+                journal.setSubject(cursor.getString(cursor.getColumnIndex(UserClass.KEY_PASSWORD)));
+                journal.setDate(cursor.getString(cursor.getColumnIndex(UserClass.KEY_EMAIL)));
+                journal.setTitle(cursor.getString(cursor.getColumnIndex(UserClass.KEY_EMAIL)));
+
+                listJournals.add(journal);
+            } while (cursor.moveToNext());
+        }
+        db.close();
+
+        return listJournals;
+    }
+
+    public ArrayList<JournalClass> getAllJournalsForUserByID(long id) {
+        ArrayList<JournalClass> listJournals = new ArrayList<>();
+
+        String query = "SELECT * FROM " + JournalClass.TABLE_JOURNAL +
+                       " WHERE " + UserClass.KEY_USER_ID + " = " + id;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+
+        // looping through all rows and add to list
+        if (cursor.moveToFirst()) {
+            do {JournalClass journal = new JournalClass();
+                journal.setId(cursor.getInt(cursor.getColumnIndex(UserClass.KEY_USER_ID)));
+                journal.setEntry(cursor.getString(cursor.getColumnIndex(UserClass.KEY_USERNAME)));
+                journal.setSubject(cursor.getString(cursor.getColumnIndex(UserClass.KEY_PASSWORD)));
+                journal.setDate(cursor.getString(cursor.getColumnIndex(UserClass.KEY_EMAIL)));
+                journal.setTitle(cursor.getString(cursor.getColumnIndex(UserClass.KEY_EMAIL)));
+
+                listJournals.add(journal);
+            } while (cursor.moveToNext());
+        }
+        db.close();
+
+        return listJournals;
     }
 }

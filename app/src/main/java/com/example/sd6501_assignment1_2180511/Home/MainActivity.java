@@ -19,11 +19,11 @@ public class MainActivity extends AppCompatActivity {
     //debug
     private static final String TAG = "MainActivity";
 
-    EditText title;
-    EditText subject;
-    EditText entry;
+    EditText title, subject, entry;
     TextView displayEntry;
     BottomNavigationView navBar;
+
+    int userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
         findViews();
 
         navBar.setOnNavigationItemSelectedListener(navListener);
+
+        //user session
+        userID = getIntent().getIntExtra("userID", 0);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.main_layout_container,
                 new HomeFragment()).commit();
@@ -74,4 +77,8 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
     };
+
+    public int getUserID() {
+        return userID;
+    }
 }
