@@ -57,7 +57,7 @@ public class JournalFragment extends Fragment {
             public void onClick(View v) {
                 saveJournalEntryDetails();
                 savedEntry.setText(userEntryDetails.getEntry());
-//                saveJournalToDB(userID);
+                saveJournalToDB(userID);
 
                 Toast.makeText(getActivity().getApplicationContext(), "Entry saved", Toast.LENGTH_SHORT).show();
                 resetTextFields();
@@ -82,12 +82,12 @@ public class JournalFragment extends Fragment {
     }
 
     private void saveJournalToDB(long userID) {
-//        DatabaseHandlerUsers dbhandler = new DatabaseHandlerUsers(getActivity().getApplicationContext());
-//        dbhandler.insertJournal( userID,
-//                                 userEntryDetails.getEntry(),
-//                                 userEntryDetails.getSubject(),
-//                                 userEntryDetails.getDate(),
-//                                 userEntryDetails.getTitle());
+        DatabaseHandlerUsers dbhandler = new DatabaseHandlerUsers(getActivity().getApplicationContext());
+        dbhandler.insertJournal( userID,
+                                 userEntryDetails.getEntry(),
+                                 userEntryDetails.getSubject(),
+                                 date,  //debug
+                                 userEntryDetails.getTitle());
     }
 
     private void resetTextFields() {

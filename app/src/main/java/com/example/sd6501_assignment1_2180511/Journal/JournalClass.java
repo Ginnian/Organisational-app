@@ -19,17 +19,18 @@ public class JournalClass {
     public static final String KEY_JOURNAL_SUBJECT = "subject";
     public static final String KEY_JOURNAL_TIMESTAMP = "timestamp";
     public static final String KEY_JOURNAL_TITLE = "title";
+    public static final String KEY_USER_ID = "accountID";
 
     public static final String CREATE_TABLE = "CREATE TABLE "
             + TABLE_JOURNAL + "("
             + KEY_JOURNAL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + KEY_JOURNAL_ENTRY + " TEXT,"
             + KEY_JOURNAL_SUBJECT + " TEXT,"
-            + KEY_JOURNAL_TIMESTAMP + " DATETIME DEFAULT (datetime('now', 'localtime')),"
+            + KEY_JOURNAL_TIMESTAMP + " TEXT,"
             + KEY_JOURNAL_TITLE + " TEXT,"
-            + UserClass.KEY_USER_ID + " INTEGER,"
-            + "FOREIGN KEY(" + UserClass.KEY_USER_ID
-            + ") REFERENCES " + UserClass.TABLE_USERS + "(" + KEY_JOURNAL_ID +"))";
+            + KEY_USER_ID + " INTEGER" + ")";
+//            + "FOREIGN KEY(" + UserClass.KEY_USER_ID
+//            + ") REFERENCES " + UserClass.TABLE_USERS + "(" + KEY_JOURNAL_ID +"))";
 
     //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     //String strDate = sdf.format(new Date());

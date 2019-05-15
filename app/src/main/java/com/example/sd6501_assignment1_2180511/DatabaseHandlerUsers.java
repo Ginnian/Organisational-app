@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.support.design.widget.Snackbar;
 import android.util.Log;
 
 import com.example.sd6501_assignment1_2180511.Journal.JournalClass;
@@ -13,8 +12,6 @@ import com.example.sd6501_assignment1_2180511.LoginRegister.UserClass;
 import com.example.sd6501_assignment1_2180511.Schedule.ScheduleClass;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 public class DatabaseHandlerUsers extends SQLiteOpenHelper {
     //debugging
@@ -24,6 +21,7 @@ public class DatabaseHandlerUsers extends SQLiteOpenHelper {
     private static final int DB_VERSION = 1;
     private static final String DATABASE_NAME = "usersdb";
 
+
     public DatabaseHandlerUsers(Context context) {
         super(context, DATABASE_NAME, null , DB_VERSION);
     }
@@ -32,15 +30,15 @@ public class DatabaseHandlerUsers extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         Log.d(TAG, "onCreate: Trying to create new tables");
         db.execSQL(UserClass.CREATE_TABLE);
-//        db.execSQL(JournalClass.CREATE_TABLE);
-//        db.execSQL(ScheduleClass.CREATE_TABLE);
+        db.execSQL(JournalClass.CREATE_TABLE);
+        db.execSQL(ScheduleClass.CREATE_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + UserClass.TABLE_USERS);
-//        db.execSQL("DROP TABLE IF EXISTS " + JournalClass.TABLE_JOURNAL);
-//        db.execSQL("DROP TABLE IF EXISTS " + ScheduleClass.TABLE_SCHEDULE);
+        db.execSQL("DROP TABLE IF EXISTS " + JournalClass.TABLE_JOURNAL);
+        db.execSQL("DROP TABLE IF EXISTS " + ScheduleClass.TABLE_SCHEDULE);
         onCreate(db);
     }
 
@@ -176,7 +174,7 @@ public class DatabaseHandlerUsers extends SQLiteOpenHelper {
         cValues.put(JournalClass.KEY_JOURNAL_SUBJECT, subject);
         cValues.put(JournalClass.KEY_JOURNAL_TIMESTAMP, timestamp);
         cValues.put(JournalClass.KEY_JOURNAL_TITLE, title);
-        cValues.put(UserClass.KEY_USER_ID, id);
+        cValues.put(JournalClass.KEY_USER_ID, id);
 
         long rowID = db.insert(JournalClass.TABLE_JOURNAL, null, cValues);
         db.close();
@@ -251,37 +249,11 @@ public class DatabaseHandlerUsers extends SQLiteOpenHelper {
         return count;
     }
 
-    public ArrayList<JournalClass> getAllJournalsFromDB() {
-        ArrayList<JournalClass> listJournals = new ArrayList<>();
-
-        String query = "SELECT * FROM " + JournalClass.TABLE_JOURNAL;
-        //String query = "SELECT username, password, email FROM " + TABLE_NAME;
-
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(query, null);
-
-        // looping through all rows and add to list
-        if (cursor.moveToFirst()) {
-            do {JournalClass journal = new JournalClass();
-                journal.setId(cursor.getInt(cursor.getColumnIndex(UserClass.KEY_USER_ID)));
-                journal.setEntry(cursor.getString(cursor.getColumnIndex(UserClass.KEY_USERNAME)));
-                journal.setSubject(cursor.getString(cursor.getColumnIndex(UserClass.KEY_PASSWORD)));
-                journal.setDate(cursor.getString(cursor.getColumnIndex(UserClass.KEY_EMAIL)));
-                journal.setTitle(cursor.getString(cursor.getColumnIndex(UserClass.KEY_EMAIL)));
-
-                listJournals.add(journal);
-            } while (cursor.moveToNext());
-        }
-        db.close();
-
-        return listJournals;
-    }
-
     public ArrayList<JournalClass> getAllJournalsForUserByID(long id) {
         ArrayList<JournalClass> listJournals = new ArrayList<>();
 
         String query = "SELECT * FROM " + JournalClass.TABLE_JOURNAL +
-                       " WHERE " + UserClass.KEY_USER_ID + " = " + id;
+                       " WHERE " + JournalClass.KEY_USER_ID+ " = " + id;
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
@@ -289,11 +261,11 @@ public class DatabaseHandlerUsers extends SQLiteOpenHelper {
         // looping through all rows and add to list
         if (cursor.moveToFirst()) {
             do {JournalClass journal = new JournalClass();
-                journal.setId(cursor.getInt(cursor.getColumnIndex(UserClass.KEY_USER_ID)));
-                journal.setEntry(cursor.getString(cursor.getColumnIndex(UserClass.KEY_USERNAME)));
-                journal.setSubject(cursor.getString(cursor.getColumnIndex(UserClass.KEY_PASSWORD)));
-                journal.setDate(cursor.getString(cursor.getColumnIndex(UserClass.KEY_EMAIL)));
-                journal.setTitle(cursor.getString(cursor.getColumnIndex(UserClass.KEY_EMAIL)));
+                journal.setId(cursor.getInt(cursor.getColumnIndex(JournalClass.KEY_JOURNAL_ID)));
+                journal.setEntry(cursor.getString(cursor.getColumnIndex(JournalClass.KEY_JOURNAL_ENTRY)));
+                journal.setSubject(cursor.getString(cursor.getColumnIndex(JournalClass.KEY_JOURNAL_SUBJECT)));
+                journal.setDate(cursor.getString(cursor.getColumnIndex(JournalClass.KEY_JOURNAL_TIMESTAMP)));
+                journal.setTitle(cursor.getString(cursor.getColumnIndex(JournalClass.KEY_JOURNAL_TITLE)));
 
                 listJournals.add(journal);
             } while (cursor.moveToNext());
