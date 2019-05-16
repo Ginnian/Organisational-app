@@ -4,8 +4,8 @@
     android:layout_height="match_parent">
 
     <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:layout_marginTop="0dp">
 
@@ -56,11 +56,11 @@
             <EditText
                 android:id="@+id/schedule_et_entry"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_below="@id/schedule_tv_dateSelected"
+                android:autoSizeTextType="uniform"
                 android:background="@color/transparent"
                 android:textColorHint="@color/transparent_white"
-
                 android:ems="10"
                 android:gravity="start"
                 android:hint="@string/editTextScheduleEvent"
@@ -69,29 +69,29 @@
                 android:minLines="4"
                 android:padding="5dp" />
 
-            <TextView
-                android:id="@+id/schedule_tv_yourWeek"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/schedule_et_entry"
-                android:layout_margin="5dp"
-                android:gravity="center"
-                android:text="ADD AN EVENT TO YOUR SCHEDULE"
-                android:background="@color/transparent"
-                android:textColor="@color/transparent_white"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+            <!--<TextView-->
+                <!--android:id="@+id/schedule_tv_yourWeek"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_below="@+id/schedule_et_entry"-->
+                <!--android:layout_margin="5dp"-->
+                <!--android:gravity="center"-->
+                <!--android:text="ADD AN EVENT TO YOUR SCHEDULE"-->
+                <!--android:background="@color/transparent"-->
+                <!--android:textColor="@color/transparent_white"-->
+                <!--android:textSize="20sp"-->
+                <!--android:textStyle="bold" />-->
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/schedule_rv_allevents"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/schedule_tv_yourWeek"
-                android:layout_marginTop="17dp"
-                android:background="@color/transparent"
-                android:scrollbars="vertical">
+            <!--<android.support.v7.widget.RecyclerView-->
+                <!--android:id="@+id/schedule_rv_allevents"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_below="@+id/schedule_tv_yourWeek"-->
+                <!--android:layout_marginTop="17dp"-->
+                <!--android:background="@color/transparent"-->
+                <!--android:scrollbars="vertical">-->
 
-            </android.support.v7.widget.RecyclerView>
+            <!--</android.support.v7.widget.RecyclerView>-->
         </RelativeLayout>
     </ScrollView>
 
