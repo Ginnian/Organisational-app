@@ -21,7 +21,6 @@ public class DatabaseHandlerUsers extends SQLiteOpenHelper {
     private static final int DB_VERSION = 1;
     private static final String DATABASE_NAME = "usersdb";
 
-
     public DatabaseHandlerUsers(Context context) {
         super(context, DATABASE_NAME, null , DB_VERSION);
     }
@@ -273,5 +272,48 @@ public class DatabaseHandlerUsers extends SQLiteOpenHelper {
         db.close();
 
         return listJournals;
+    }
+
+    //Schedules
+    public long insertSchedule (long id, String entry, String subject, String timestamp) {
+        Log.d(TAG, "insertSchedule: Trying to add schedule to the database");
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues cValues = new ContentValues();
+        cValues.put(ScheduleClass.KEY_SCHEDULE_ENTRY, entry);
+        cValues.put(ScheduleClass.KEY_SCHEDULE_NOTIFYEVENT, timestamp);
+        cValues.put(ScheduleClass.KEY_SCHEDULE_SUBJECT, subject);
+        cValues.put(ScheduleClass.KEY_SCHEDULE_USERID, id);
+        //add image
+
+        long rowID = db.insert(ScheduleClass.TABLE_SCHEDULE, null, cValues);
+        db.close();
+
+        return rowID;
+    }
+
+    public ArrayList<ScheduleClass> getAllSchedulesForUserByID(long id) {
+        ArrayList<ScheduleClass> listSchedule = new ArrayList<>();
+
+        String query = "SELECT * FROM " + ScheduleClass.TABLE_SCHEDULE +
+                " WHERE " + ScheduleClass.KEY_SCHEDULE_USERID+ " = " + id;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+
+        // looping through all rows and add to list
+        if (cursor.moveToFirst()) {
+            do {ScheduleClass schedule = new ScheduleClass();
+                schedule.setId(cursor.getInt(cursor.getColumnIndex(ScheduleClass.KEY_SCHEDULE_ID)));
+                schedule.setEntry(cursor.getString(cursor.getColumnIndex(ScheduleClass.KEY_SCHEDULE_ENTRY)));
+                schedule.setSubject(cursor.getString(cursor.getColumnIndex(ScheduleClass.KEY_SCHEDULE_SUBJECT)));
+                schedule.setDate(cursor.getString(cursor.getColumnIndex(ScheduleClass.KEY_SCHEDULE_NOTIFYEVENT)));
+
+                listSchedule.add(schedule);
+            } while (cursor.moveToNext());
+        }
+        db.close();
+
+        return listSchedule;
     }
 }

@@ -51,25 +51,18 @@ public class HomeFragment extends Fragment {
         MainActivity mainActivity = (MainActivity) getActivity();
         final long userID = mainActivity.getUserID();
 
-        schedules = new ArrayList<>();
-        schedules.add(new ScheduleClass());
-        schedules.add(new ScheduleClass());
-        schedules.add(new ScheduleClass());
-        schedules.add(new ScheduleClass());
-        schedules.add(new ScheduleClass());
+        setScheduleView(v, userID);
+        setJournalView(v, userID);
 
-        adapterSchedule = new ScheduleCardAdapter(schedules, getActivity().getApplicationContext());
-        viewPagerSchedule = v.findViewById(R.id.home_vp_schedule);
-        viewPagerSchedule.setAdapter(adapterSchedule);
-        viewPagerSchedule.setPadding(0,0,130,0);
+        //sort by date
+        //sort by category
 
+        return v;
+    }
+
+    private void setJournalView(View v, long id) {
         journals = new ArrayList<>();
-        journals.addAll(db.getAllJournalsForUserByID(userID));
-//        journals.add(new JournalClass());
-//        journals.add(new JournalClass());
-//        journals.add(new JournalClass());
-//        journals.add(new JournalClass());
-//        journals.add(new JournalClass());
+        journals.addAll(db.getAllJournalsForUserByID(id));
 
         if(!journals.isEmpty()) {
             adapterJournal = new JournalCardAdapter(journals, getActivity().getApplicationContext());
@@ -77,31 +70,39 @@ public class HomeFragment extends Fragment {
             viewPagerJournal.setAdapter(adapterJournal);
             viewPagerJournal.setPadding(0,0,130,0);
         } else {
-            noJournals.setText("No Journals saved. Tap the icon to add an new one");
-//            noSchedules.setText("No Schedules saved. Tap the icon to add an new one");
+            noJournals.setText("No Journals saved. Tap the icon to add a new one");
         }
+    }
 
-        viewPagerSchedule.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int i, float v, int i1) {
-                viewPagerSchedule.setBackgroundColor(getResources().getColor(R.color.transparent));
-            }
+    private void setScheduleView(View v, long id) {
+        schedules = new ArrayList<>();
+        schedules.addAll(db.getAllSchedulesForUserByID(id));
 
-            @Override
-            public void onPageSelected(int i) {
+        if(!schedules.isEmpty()) {
+            adapterSchedule = new ScheduleCardAdapter(schedules, getActivity().getApplicationContext());
+            viewPagerSchedule = v.findViewById(R.id.home_vp_schedule);
+            viewPagerSchedule.setAdapter(adapterSchedule);
+            viewPagerSchedule.setPadding(0,0,130,0);
 
-            }
+            viewPagerSchedule.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                @Override
+                public void onPageScrolled(int i, float v, int i1) {
+                    viewPagerSchedule.setBackgroundColor(getResources().getColor(R.color.transparent));
+                }
 
-            @Override
-            public void onPageScrollStateChanged(int i) {
+                @Override
+                public void onPageSelected(int i) {
 
-            }
-        });
+                }
 
-        //sort by date
-        //sort by category
+                @Override
+                public void onPageScrollStateChanged(int i) {
 
-        return v;
+                }
+            });
+        } else {
+            noSchedules.setText("No Schedules saved. Tap the icon to add an new one");
+        }
     }
 
     private void findViews(View v) {
