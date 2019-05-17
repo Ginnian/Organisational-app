@@ -15,7 +15,7 @@ package com.example.sd6501_assignment1_2180511.LoginRegister;
         import android.widget.TextView;
         import android.widget.Toast;
 
-        import com.example.sd6501_assignment1_2180511.DatabaseHandlerUsers;
+        import com.example.sd6501_assignment1_2180511.DatabaseHandler;
         import com.example.sd6501_assignment1_2180511.R;
 
         import java.util.HashMap;
@@ -30,16 +30,15 @@ public class RegistrationActivity extends AppCompatActivity {
     private Button register;
 
     //data for log in activity
-    HashMap<String, String> userDetails = new HashMap<>();
     protected int loginResultCode = 1;
-    DatabaseHandlerUsers db;
+    DatabaseHandler db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
 
-        db = new DatabaseHandlerUsers(this);
+        db = new DatabaseHandler(this);
         findViews();
 
         setSpannableLogInString();
@@ -139,8 +138,6 @@ public class RegistrationActivity extends AppCompatActivity {
         if(!checkEmailIsValid() | !checkPassword() | !checkRetryPassword() ) {
             return;
         }
-
-        userDetails.put(email.getText().toString().trim(), confirmPassword.getText().toString().trim());
         Log.d(TAG, "checkInput: Creating a new user");
 
         long userID = db.insertUser("sample",

@@ -5,25 +5,25 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.sd6501_assignment1_2180511.DatabaseHandlerUsers;
+import com.example.sd6501_assignment1_2180511.DatabaseHandler;
 import com.example.sd6501_assignment1_2180511.Home.MainActivity;
 import com.example.sd6501_assignment1_2180511.R;
 
 public class JournalFragment extends Fragment {
+    //debug
+    private static final String TAG = "JournalFragment";
+
     private EditText title, subject, entry;
-    private TextView savedEntry;
     private JournalClass userEntryDetails;
     private FloatingActionButton floatingActionButton;
-
-    String date = "10/10/10"; //debug
 
     @Nullable
     @Override
@@ -43,7 +43,9 @@ public class JournalFragment extends Fragment {
                 switch(keyCode) {
                     case KeyEvent.KEYCODE_ENTER:
                         saveJournalEntryDetails();
-                        savedEntry.setText(userEntryDetails.getEntry());
+                        saveJournalToDB(userID);
+                        Toast.makeText(getActivity().getApplicationContext(), "Entry saved", Toast.LENGTH_SHORT).show();
+                        resetTextFields();
                         return true;
                     default:
                         break;
@@ -55,10 +57,9 @@ public class JournalFragment extends Fragment {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d(TAG, "onClick: Trying to save new journal entry to database");
                 saveJournalEntryDetails();
-                savedEntry.setText(userEntryDetails.getEntry());
                 saveJournalToDB(userID);
-
                 Toast.makeText(getActivity().getApplicationContext(), "Entry saved", Toast.LENGTH_SHORT).show();
                 resetTextFields();
             }
@@ -71,7 +72,6 @@ public class JournalFragment extends Fragment {
         title = v.findViewById(R.id.jourrnalEntry_et_title);
         subject = v.findViewById(R.id.journalEntry_et_subject);
         entry = v.findViewById(R.id.journalEntry_et_entry);
-        savedEntry = v.findViewById(R.id.journalEntry_tv_savedentry);
         floatingActionButton = v.findViewById(R.id.journalEntry_fab_addJournal);
     }
 
@@ -82,11 +82,11 @@ public class JournalFragment extends Fragment {
     }
 
     private void saveJournalToDB(long userID) {
-        DatabaseHandlerUsers dbhandler = new DatabaseHandlerUsers(getActivity().getApplicationContext());
+        DatabaseHandler dbhandler = new DatabaseHandler(getActivity().getApplicationContext());
         dbhandler.insertJournal( userID,
                                  userEntryDetails.getEntry(),
                                  userEntryDetails.getSubject(),
-                                 date,  //debug
+                                 userEntryDetails.getDate(),  //debug
                                  userEntryDetails.getTitle());
     }
 

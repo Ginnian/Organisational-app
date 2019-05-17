@@ -44,7 +44,8 @@
         android:maxLines="10"
         android:minLines="10"
         android:padding="6dp"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:layout_alignParentBottom="true"/>
 
     <Spinner
         android:id="@+id/spinnerCategorise"
@@ -56,20 +57,20 @@
         android:background="@color/transparent"
         android:textColorHint="@color/transparent_white"/>
 
-    <TextView
-        android:id="@+id/journalEntry_tv_savedentry"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/journalEntry_et_entry"
-        android:layout_margin="6dp"
-        android:background="@color/transparent"
-        android:textColorHint="@color/transparent_white"
-        android:gravity="start"
-        android:inputType="textMultiLine"
-        android:maxLines="10"
-        android:minLines="10"
-        android:paddingLeft="5dp"
-        android:textSize="20sp" />
+    <!--<TextView-->
+        <!--android:id="@+id/journalEntry_tv_savedentry"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/journalEntry_et_entry"-->
+        <!--android:layout_margin="6dp"-->
+        <!--android:background="@color/transparent"-->
+        <!--android:textColorHint="@color/transparent_white"-->
+        <!--android:gravity="start"-->
+        <!--android:inputType="textMultiLine"-->
+        <!--android:maxLines="10"-->
+        <!--android:minLines="10"-->
+        <!--android:paddingLeft="5dp"-->
+        <!--android:textSize="20sp" />-->
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/journalEntry_fab_addJournal"

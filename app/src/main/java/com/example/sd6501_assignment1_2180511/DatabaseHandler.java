@@ -13,15 +13,15 @@ import com.example.sd6501_assignment1_2180511.Schedule.ScheduleClass;
 
 import java.util.ArrayList;
 
-public class DatabaseHandlerUsers extends SQLiteOpenHelper {
+public class DatabaseHandler extends SQLiteOpenHelper {
     //debugging
-    private static final String TAG = "DatabaseHandlerUsers";
+    private static final String TAG = "DatabaseHandler";
 
     //database info
     private static final int DB_VERSION = 1;
     private static final String DATABASE_NAME = "usersdb";
 
-    public DatabaseHandlerUsers(Context context) {
+    public DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null , DB_VERSION);
     }
 
@@ -315,5 +315,14 @@ public class DatabaseHandlerUsers extends SQLiteOpenHelper {
         db.close();
 
         return listSchedule;
+    }
+
+    public void deleteSchedule(ScheduleClass schedule) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        //delete record by user ID
+        db.delete(ScheduleClass.TABLE_SCHEDULE, ScheduleClass.KEY_SCHEDULE_ID + "=?",
+                new String[]{String.valueOf(schedule.getId())});
+        db.close();
     }
 }

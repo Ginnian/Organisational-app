@@ -5,6 +5,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -20,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
     EditText title, subject, entry;
-    TextView displayEntry;
     BottomNavigationView navBar;
 
     int userID;
@@ -45,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
         title = findViewById(R.id.jourrnalEntry_et_title);
         subject = findViewById(R.id.journalEntry_et_subject);
         entry = findViewById(R.id.journalEntry_et_entry);
-        displayEntry = findViewById(R.id.journalEntry_tv_savedentry);
         navBar = findViewById(R.id.layout_bottomNavigation);
     }
 
@@ -53,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
             new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+            Log.d(TAG, "onNavigationItemSelected: Switching between fragments");
             Fragment fragment = null;
 
             switch (menuItem.getItemId()) {

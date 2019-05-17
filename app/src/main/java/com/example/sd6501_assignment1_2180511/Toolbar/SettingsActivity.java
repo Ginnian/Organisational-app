@@ -1,4 +1,4 @@
-package com.example.sd6501_assignment1_2180511;
+package com.example.sd6501_assignment1_2180511.Toolbar;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -18,6 +18,8 @@ import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.text.TextUtils;
 import android.view.MenuItem;
+
+import com.example.sd6501_assignment1_2180511.R;
 
 import java.util.List;
 

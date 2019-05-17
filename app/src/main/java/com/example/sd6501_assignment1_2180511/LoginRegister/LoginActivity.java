@@ -14,7 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.sd6501_assignment1_2180511.DatabaseHandlerUsers;
+import com.example.sd6501_assignment1_2180511.DatabaseHandler;
 import com.example.sd6501_assignment1_2180511.Home.MainActivity;
 import com.example.sd6501_assignment1_2180511.R;
 
@@ -30,7 +30,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextView registerText, incorrectLogin;
 
     //User database
-    private DatabaseHandlerUsers db;
+    private DatabaseHandler db;
 
     //Registration
 //    HashMap<String, String> logInInfo = new HashMap<>();
@@ -43,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        db = new DatabaseHandlerUsers(LoginActivity.this);
+        db = new DatabaseHandler(LoginActivity.this);
 
         findViews();
 
