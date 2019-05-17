@@ -2,7 +2,9 @@ package com.example.sd6501_assignment1_2180511.Schedule;
 
 import com.example.sd6501_assignment1_2180511.R;
 
-public class ScheduleClass {
+import java.io.Serializable;
+
+public class ScheduleClass implements Serializable {
     private int id;
     private int imageResource;
     private String entry;
@@ -33,7 +35,7 @@ public class ScheduleClass {
         this.entry = "Default entry";
         this.subject = "Unclassified";
         this.date = "Today";
-    }
+        this.id = -1;    }
 
     public ScheduleClass(int id, int imageResource, String entry, String subject, String date) {
         this.id = id;

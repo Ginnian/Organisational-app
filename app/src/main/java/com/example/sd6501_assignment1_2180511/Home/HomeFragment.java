@@ -1,5 +1,6 @@
 package com.example.sd6501_assignment1_2180511.Home;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -36,10 +37,10 @@ public class HomeFragment extends Fragment {
     DatabaseHandler db;
 
     //schedule
-    ViewPager viewPagerSchedule;
-    ScheduleCardAdapter adapterSchedule;
-    List<ScheduleClass> schedules;
-    TextView noSchedules;
+//    ViewPager viewPagerSchedule;
+//    ScheduleCardAdapter adapterSchedule;
+//    List<ScheduleClass> schedules;
+//    TextView noSchedules;
 
     //journal
     ViewPager viewPagerJournal;
@@ -70,7 +71,7 @@ public class HomeFragment extends Fragment {
         draftSchedules.addAll(db.getAllSchedulesForUserByID(userID));
         buildRecyclerVIew(v);
 
-        setScheduleView(v, userID);
+//        setScheduleView(v, userID);
         setJournalView(v, userID);
 
         //sort by date
@@ -93,36 +94,36 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    private void setScheduleView(View v, long id) {
-        schedules = new ArrayList<>();
-        schedules.addAll(db.getAllSchedulesForUserByID(id));
-
-        if(!schedules.isEmpty()) {
-            adapterSchedule = new ScheduleCardAdapter(schedules, getActivity().getApplicationContext());
-            viewPagerSchedule = v.findViewById(R.id.home_vp_schedule);
-            viewPagerSchedule.setAdapter(adapterSchedule);
-            viewPagerSchedule.setPadding(0,0,130,0);
-
-            viewPagerSchedule.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-                @Override
-                public void onPageScrolled(int i, float v, int i1) {
-                    viewPagerSchedule.setBackgroundColor(getResources().getColor(R.color.transparent));
-                }
-
-                @Override
-                public void onPageSelected(int i) {
-
-                }
-
-                @Override
-                public void onPageScrollStateChanged(int i) {
-
-                }
-            });
-        } else {
-            noSchedules.setText("No Schedules saved. Tap the icon to add an new one");
-        }
-    }
+//    private void setScheduleView(View v, long id) {
+//        schedules = new ArrayList<>();
+//        schedules.addAll(db.getAllSchedulesForUserByID(id));
+//
+//        if(!schedules.isEmpty()) {
+//            adapterSchedule = new ScheduleCardAdapter(schedules, getActivity().getApplicationContext());
+////            viewPagerSchedule = v.findViewById(R.id.home_vp_schedule);
+//            viewPagerSchedule.setAdapter(adapterSchedule);
+//            viewPagerSchedule.setPadding(0,0,130,0);
+//
+//            viewPagerSchedule.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+//                @Override
+//                public void onPageScrolled(int i, float v, int i1) {
+//                    viewPagerSchedule.setBackgroundColor(getResources().getColor(R.color.transparent));
+//                }
+//
+//                @Override
+//                public void onPageSelected(int i) {
+//
+//                }
+//
+//                @Override
+//                public void onPageScrollStateChanged(int i) {
+//
+//                }
+//            });
+//        } else {
+//            noSchedules.setText("No Schedules saved. Tap the icon to add an new one");
+//        }
+//    }
 
     private void buildRecyclerVIew(View v) {
         rv.setHasFixedSize(true);
@@ -155,20 +156,25 @@ public class HomeFragment extends Fragment {
     }
 
     private void editItem(int position) {
-        Fragment fragment = new ScheduleFragment();
+        //gather data
+        ScheduleClass schedule = draftSchedules.get(position);
+        ScheduleFragment scheduleFragment = new ScheduleFragment();
+        MainActivity mainActivity = (MainActivity) getActivity();
+        mainActivity.setScheduleID(schedule.getId());
+
+        //Send to fragment to be edited
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.main_layout_container, fragment);
+        fragmentTransaction.replace(R.id.main_layout_container, scheduleFragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
-        Toast.makeText(getActivity().getApplication(), "Item updated", Toast.LENGTH_SHORT).show();
     }
 
     public void deleteItem(int position) {
         ScheduleClass schedule = draftSchedules.get(position);
         db.deleteSchedule(schedule);
 
-        Toast.makeText(getActivity().getApplication(), "Item deleted: " + schedule.getEntry() + " at position: " + position, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity().getApplication(), "Entry deleted", Toast.LENGTH_SHORT).show();
 
         draftSchedules.remove(position);
         adapter.notifyItemRemoved(position);
@@ -176,7 +182,7 @@ public class HomeFragment extends Fragment {
 
     private void findViews(View v) {
         noJournals = v.findViewById(R.id.home_tv_noJournals);
-        noSchedules = v.findViewById(R.id.home_tv_noSchedules);
+//        noSchedules = v.findViewById(R.id.home_tv_noSchedules);
         rv = v.findViewById(R.id.home_rv_schedule);
     }
 }

@@ -31,12 +31,7 @@ public class ScheduleFragment extends Fragment {
     private TextView currentDate;
     private FloatingActionButton floatingActionButton;
 
-//    Build event view
-    ArrayList<ScheduleClass> events = new ArrayList<>();
     ScheduleClass eventObj = new ScheduleClass();
-//    RecyclerView rv;
-//    RecyclerView.Adapter rvAdapter;
-//    RecyclerView.LayoutManager rvLayoutManager;
 
     @Nullable
     @Override
@@ -44,11 +39,12 @@ public class ScheduleFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_schedule, container, false);
 
         findViews(v);
-//        buildRecyclerLayout();
 
-        //get session id
+        //get session id's
         MainActivity mainActivity = (MainActivity) getActivity();
         final long userID = mainActivity.getUserID();
+        long scheduleID = mainActivity.getScheduleID();
+        long journalID = mainActivity.getJournalID();
 
         calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
@@ -60,21 +56,48 @@ public class ScheduleFragment extends Fragment {
             }
         });
 
-        floatingActionButton.setEnabled(false);
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                eventObj.setEntry(eventEntry.getText().toString().trim());
-                
-                saveJournalToDB(userID);
-                Toast.makeText(getActivity().getApplicationContext(), 
-                        "New schedule added", Toast.LENGTH_SHORT).show();
-//                events.add(eventObj);
-                eventEntry.getText().clear();
-            }
-        });
 
-//        Disable fab if entry editText is empty'
+        floatingActionButton.setEnabled(false);
+        if(scheduleID != 0) {
+            //editing the schedule
+            DatabaseHandler db = new DatabaseHandler(getActivity().getApplication());
+            final ScheduleClass editSchedule = db.getScheduleByID(scheduleID);
+
+            //populate fields with event to edit
+            eventEntry.setText(editSchedule.getEntry());
+            currentDate.setText(editSchedule.getDate());
+
+            floatingActionButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    editSchedule.setEntry(eventEntry.getText().toString().trim());
+                    editSchedule.setDate(currentDate.getText().toString().trim());
+                    editSchedule.setSubject("default subject in development"); //debug
+
+                    updateScheduleInDB(editSchedule);
+                    Toast.makeText(getActivity().getApplicationContext(),
+                            "Schedule updated", Toast.LENGTH_SHORT).show();
+
+                    eventEntry.getText().clear();
+                }
+            });
+
+            mainActivity.setScheduleID(0); //reset schedule id for future editing
+        } else {
+            //create a new schedule
+            floatingActionButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    saveScheduleToDB(userID);
+                    Toast.makeText(getActivity().getApplicationContext(),
+                            "New schedule added", Toast.LENGTH_SHORT).show();
+
+                    eventEntry.getText().clear();
+                }
+            });
+        }
+
+//        Disable fab if entry editText is empty
         eventEntry.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -102,21 +125,19 @@ public class ScheduleFragment extends Fragment {
         eventEntry = v.findViewById(R.id.schedule_et_entry);
         currentDate = v.findViewById(R.id.schedule_tv_dateSelected);
         floatingActionButton = v.findViewById(R.id.schedule_fab_addSchedule);
-//        rv = v.findViewById(R.id.schedule_rv_allevents);
     }  //find view variables
 
-//    public void buildRecyclerLayout() {
-//        rv.setHasFixedSize(true);
-//        rvLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
-//        rvAdapter = new DraftScheduleAdapter(events);
-//        rv.setLayoutManager(rvLayoutManager);
-//        rv.setAdapter(rvAdapter);
-//    } //Build event layout for the recycler view
-
-    private void saveJournalToDB(long userID) {
+    private void saveScheduleToDB(long userID) {
         Log.d(TAG, "saveJournalToDB: Saving schedule to database");
         
         DatabaseHandler dbhandler = new DatabaseHandler(getActivity().getApplicationContext());
         dbhandler.insertSchedule(userID, eventObj.getEntry(), eventObj.getSubject(), eventObj.getDate());
+    }
+
+    private void updateScheduleInDB(ScheduleClass scheduleClass) {
+        Log.d(TAG, "updateScheduleInDB: Trying to update a schedule entry");
+
+        DatabaseHandler db = new DatabaseHandler(getActivity().getApplication());
+        db.updateSchedule(scheduleClass);
     }
 }

@@ -23,7 +23,10 @@ public class MainActivity extends AppCompatActivity {
     EditText title, subject, entry;
     BottomNavigationView navBar;
 
+    //Communicate data between fragments for editing
     int userID;
+    int journalID;
+    int scheduleID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,5 +83,21 @@ public class MainActivity extends AppCompatActivity {
 
     public int getUserID() {
         return userID;
+    }
+
+    public int getJournalID() {
+        return journalID;
+    }
+
+    public void setJournalID(int id) {
+        journalID = id;
+    }
+
+    public int getScheduleID(){
+        return scheduleID;
+    }
+
+    public void setScheduleID(int id) {
+        scheduleID = id;
     }
 }

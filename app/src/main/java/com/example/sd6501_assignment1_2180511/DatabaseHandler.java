@@ -325,4 +325,49 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 new String[]{String.valueOf(schedule.getId())});
         db.close();
     }
+
+    public ScheduleClass getScheduleByID(long id) {
+        //debug
+        Log.d(TAG, "getScheduleByID: Trying to retrieve schedule from database");
+
+        //read only database
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(ScheduleClass.TABLE_SCHEDULE,
+                new String[]{ScheduleClass.KEY_SCHEDULE_ID, ScheduleClass.KEY_SCHEDULE_ENTRY,
+                        ScheduleClass.KEY_SCHEDULE_SUBJECT, ScheduleClass.KEY_SCHEDULE_NOTIFYEVENT},
+                ScheduleClass.KEY_SCHEDULE_ID + "=?",
+                new String[]{String.valueOf(id)},
+                null, null, null, null);
+
+        if (cursor != null)
+            cursor.moveToFirst();
+
+        // prepare user object
+        ScheduleClass schedule = new ScheduleClass(
+                cursor.getInt(cursor.getColumnIndex(ScheduleClass.KEY_SCHEDULE_ID)),
+                1, //debug
+                cursor.getString(cursor.getColumnIndex(ScheduleClass.KEY_SCHEDULE_ENTRY)),
+                cursor.getString(cursor.getColumnIndex(ScheduleClass.KEY_SCHEDULE_SUBJECT)),
+                cursor.getString(cursor.getColumnIndex(ScheduleClass.KEY_SCHEDULE_NOTIFYEVENT)));
+
+        cursor.close();
+
+        return schedule;
+    }
+
+    public void updateSchedule(ScheduleClass schedule) {
+        Log.d(TAG, "updateUser: Trying to update journal in database");
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues cValues = new ContentValues();
+        cValues.put(ScheduleClass.KEY_SCHEDULE_SUBJECT, schedule.getEntry());
+        cValues.put(ScheduleClass.KEY_SCHEDULE_NOTIFYEVENT, schedule.getDate());
+        cValues.put(ScheduleClass.KEY_SCHEDULE_ENTRY, schedule.getEntry());
+
+        db.update(ScheduleClass.TABLE_SCHEDULE,
+                cValues, JournalClass.KEY_JOURNAL_ID + "=?",
+                new String[]{String.valueOf(schedule.getId())});
+        db.close();
+    }
 }
