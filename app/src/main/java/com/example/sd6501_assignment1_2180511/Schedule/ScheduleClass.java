@@ -31,7 +31,7 @@ public class ScheduleClass implements Serializable {
 //            + ") REFERENCES " + UserClass.TABLE_USERS + "(" + UserClass.KEY_USER_ID +"))";
 
     public ScheduleClass() {
-        this.imageResource = R.drawable.ic_schedule;
+        this.imageResource = R.drawable.map;
         this.entry = "Default entry";
         this.subject = "Unclassified";
         this.date = "Today";

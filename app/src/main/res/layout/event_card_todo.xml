@@ -15,64 +15,47 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/cardEvent_iv_image"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:scaleType="centerCrop"
-                tools:srcCompat="@tools:sample/backgrounds/scenic" />
-
             <TextView
-                android:id="@+id/cardEvent_tv_subject"
+                android:id="@+id/todoCard_tv_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/cardEvent_iv_image"
                 android:background="@color/transparent_grey"
-                android:layout_toLeftOf="@+id/cardEvent_tv_date"
                 android:paddingLeft="5dp"
                 android:paddingVertical="5dp"
                 android:text="Subject"
                 android:textColor="@color/white"
-                android:textSize="20sp"
-                android:layout_toStartOf="@+id/cardEvent_tv_date" />
+                android:textSize="20sp"/>
 
-            <TextView
-                android:id="@+id/cardEvent_tv_entry"
+            <ListView
+                android:id="@+id/todoCard_lv_list"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/cardEvent_iv_image"
-                android:inputType="textMultiLine"
-                android:maxLines="20"
-                android:minLines="11"
-                android:padding="5dp"
-                android:text="entry..."
-                android:textSize="15sp"
-                android:paddingHorizontal="5dp"
-                tools:ignore="TextViewEdits" />
+                android:layout_height="320dp"
+                android:layout_below="@+id/todoCard_tv_title"
+                android:paddingHorizontal="5dp" />
 
             <TextView
-                android:id="@+id/cardEvent_tv_date"
+                android:id="@+id/todoCard_tv_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/cardEvent_tv_subject"
+                android:layout_alignTop="@+id/todoCard_tv_title"
                 android:padding="5dp"
                 android:text="DATE"
                 android:layout_alignParentRight="true"
-                android:layout_alignBottom="@+id/cardEvent_iv_image"
+                android:layout_alignBottom="@+id/todoCard_tv_title"
                 android:gravity="center"
                 android:textColor="@color/white"
                 android:background="@color/transparent_grey"
                 android:textSize="18sp"/>
 
             <ImageButton
-                android:id="@+id/cardEvent_ib_favourite"
+                android:id="@+id/todoCard_ib_favourite"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/transparent"
                 android:layout_alignParentRight="true"
-                android:layout_alignBottom="@+id/cardEvent_btn_delete"
-                android:layout_alignTop="@+id/cardEvent_btn_delete"
-                android:padding="5dp"
+                android:layout_below="@+id/todoCard_lv_list"
+                android:padding="6dp"
+                android:layout_alignBottom="@+id/todoCard_btn_edit"
                 app:srcCompat="@drawable/ic_favorite" />
 
             <ImageButton
@@ -81,28 +64,28 @@
                 android:id="@+id/cardEvent_ib_alarm"
                 app:srcCompat="@drawable/ic_alarm"
                 android:background="@color/transparent"
-                android:layout_toLeftOf="@id/cardEvent_ib_favourite"
-                android:layout_alignBottom="@+id/cardEvent_ib_favourite"
-                android:layout_alignTop="@+id/cardEvent_ib_favourite"
-                android:padding="5dp"/>
+                android:layout_toLeftOf="@id/todoCard_ib_favourite"
+                android:layout_alignBottom="@+id/todoCard_btn_edit"
+                android:layout_alignTop="@+id/todoCard_ib_favourite"
+                android:padding="6dp" />
 
             <Button
-                android:id="@+id/cardEvent_btn_edit"
+                android:id="@+id/todoCard_btn_edit"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:text="@string/edit"
-                android:layout_below="@+id/cardEvent_tv_entry"
+                android:layout_below="@+id/todoCard_lv_list"
                 android:textColor="@color/white"
                 android:backgroundTint="@color/dark_gray"
                 />
 
             <Button
-                android:id="@+id/cardEvent_btn_delete"
+                android:id="@+id/todoCard_btn_delete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/delete"
-                android:layout_below="@+id/cardEvent_tv_entry"
-                android:layout_toRightOf="@+id/cardEvent_btn_edit"
+                android:layout_below="@+id/todoCard_lv_list"
+                android:layout_toRightOf="@+id/todoCard_btn_edit"
                 android:textColor="@color/dark_gray"
                 android:background="@color/white"
                 />

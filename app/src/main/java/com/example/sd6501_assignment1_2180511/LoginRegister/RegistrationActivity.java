@@ -39,6 +39,7 @@ public class RegistrationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_registration);
 
         db = new DatabaseHandler(this);
+
         findViews();
 
         setSpannableLogInString();
@@ -81,6 +82,9 @@ public class RegistrationActivity extends AppCompatActivity {
             return false;
         } else if(input.isEmpty()) {
             email.setError("Required");
+            return false;
+        } else if (db.isEmailExists(input)) {
+            email.setError("Email already exists");
             return false;
         } else {
             email.setError(null);

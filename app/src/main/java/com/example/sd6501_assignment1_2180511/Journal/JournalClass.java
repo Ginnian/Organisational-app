@@ -32,14 +32,8 @@ public class JournalClass {
 //            + "FOREIGN KEY(" + UserClass.KEY_USER_ID
 //            + ") REFERENCES " + UserClass.TABLE_USERS + "(" + KEY_JOURNAL_ID +"))";
 
-    //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    //String strDate = sdf.format(new Date());
-    //
-    //ContentValues values = new ContentValues();
-    //values.put("ColumnName", strDate);
-
     public JournalClass() {
-        this.imageResource = R.drawable.ic_schedule;
+        this.imageResource = R.drawable.rdr2;
         this.entry = "Default entry";
         this.subject = "Unclassified Subject";
         this.date = "Today";

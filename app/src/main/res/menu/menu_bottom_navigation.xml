@@ -20,4 +20,9 @@
         android:id="@+id/menu_nav_todo"
         android:icon="@drawable/ic_todo"
         android:title="To Do"/>
+
+    <item
+        android:id="@+id/menu_nav_routine"
+        android:icon="@drawable/ic_routine"
+        android:title="Routine"/>
 </menu>

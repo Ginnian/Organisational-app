@@ -1,29 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/gunmetal_grey">
-
-    <TextView
-        android:id="@+id/home_tv_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerInParent="true"
-        android:text="YOUR ENTRIES"
-        android:textColor="@color/transparent_white"
-        android:textSize="30sp" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/home_tv_title"
         android:fillViewport="true">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/home_tv_title">
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/home_tv_titleSchedule"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:paddingHorizontal="10dp"
+                android:paddingTop="10dp"
+                android:text="Schedules"
+                android:textColor="@color/transparent_white"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/home_tv_titleJournal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/home_rv_schedule"
+                android:paddingHorizontal="10dp"
+                android:paddingTop="5dp"
+                android:text="Journals"
+                android:textColor="@color/transparent_white"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/home_tv_noSchedules"
@@ -34,16 +46,6 @@
                 android:layout_marginTop="110dp"
                 />
 
-            <!--<android.support.v4.view.ViewPager-->
-                <!--android:foregroundGravity="center"-->
-                <!--android:id="@+id/home_vp_schedule"-->
-                <!--android:layout_alignParentLeft="true"-->
-                <!--android:overScrollMode="never"-->
-                <!--android:clipToPadding="false"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="225dp">-->
-            <!--</android.support.v4.view.ViewPager>-->
-
             <TextView
                 android:id="@+id/home_tv_noJournals"
                 android:layout_width="wrap_content"
@@ -53,21 +55,31 @@
                 android:layout_marginTop="350dp"
                 />
 
-            <android.support.v4.view.ViewPager
-                android:foregroundGravity="center"
-                android:id="@+id/home_vp_journal"
-                android:layout_alignParentLeft="true"
-                android:overScrollMode="never"
-                android:clipToPadding="false"
-                android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:layout_below="@+id/home_rv_schedule">
-            </android.support.v4.view.ViewPager>
+            <!--<android.support.v4.view.ViewPager-->
+                <!--android:foregroundGravity="center"-->
+                <!--android:id="@+id/home_vp_journal"-->
+                <!--android:layout_alignParentLeft="true"-->
+                <!--android:overScrollMode="never"-->
+                <!--android:clipToPadding="false"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="250dp"-->
+                <!--android:layout_below="@+id/home_tv_titleJournal">-->
+            <!--</android.support.v4.view.ViewPager>-->
 
             <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/home_rv_schedule">
+                android:id="@+id/home_rv_schedule"
+                android:layout_below="@+id/home_tv_titleSchedule"
+                tools:spanCount="5">
+            </android.support.v7.widget.RecyclerView>
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/home_rv_journal"
+                android:layout_below="@+id/home_tv_titleJournal"
+                app:spanCount="5">
             </android.support.v7.widget.RecyclerView>
 
         </RelativeLayout>

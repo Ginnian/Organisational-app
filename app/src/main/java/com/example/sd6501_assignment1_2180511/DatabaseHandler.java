@@ -10,6 +10,7 @@ import android.util.Log;
 import com.example.sd6501_assignment1_2180511.Journal.JournalClass;
 import com.example.sd6501_assignment1_2180511.LoginRegister.UserClass;
 import com.example.sd6501_assignment1_2180511.Schedule.ScheduleClass;
+import com.example.sd6501_assignment1_2180511.ToDo.ToDoClass;
 
 import java.util.ArrayList;
 
@@ -55,6 +56,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         return newRowId; // row id
     }
+
+//    public  void createToDoListTable(String category, ArrayList<ToDoClass> toDoList) {
+//
+//    }
 
     public UserClass getUserByID(long id) {
         //debug
@@ -127,7 +132,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 new String[]{UserClass.KEY_USER_ID, UserClass.KEY_USERNAME,
                         UserClass.KEY_PASSWORD, UserClass.KEY_EMAIL},
                 UserClass.KEY_EMAIL + "=?",
-                new String[]{email},//Where clause
+                new String[]{email},
                 null, null, null);
 
         if (cursor != null && cursor.moveToFirst()&& cursor.getCount()>0) {
@@ -252,7 +257,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         ArrayList<JournalClass> listJournals = new ArrayList<>();
 
         String query = "SELECT * FROM " + JournalClass.TABLE_JOURNAL +
-                       " WHERE " + JournalClass.KEY_USER_ID+ " = " + id;
+                       " WHERE " + JournalClass.KEY_USER_ID + " = " + id;
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);

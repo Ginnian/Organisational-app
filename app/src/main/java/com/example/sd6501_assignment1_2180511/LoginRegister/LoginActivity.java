@@ -33,7 +33,6 @@ public class LoginActivity extends AppCompatActivity {
     private DatabaseHandler db;
 
     //Registration
-//    HashMap<String, String> logInInfo = new HashMap<>();
     ArrayList<UserClass> users;
     long newUserID;
     protected static int registrationRequestCode = 1;
@@ -57,7 +56,8 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: Trying to save user details");
-                checkLogin(email.getText().toString().trim(), password.getText().toString().trim());
+                checkLogin(email.getText().toString().trim(),
+                           password.getText().toString().trim());
             }
         }); //End log in
     }
@@ -102,7 +102,6 @@ public class LoginActivity extends AppCompatActivity {
     private void checkLogin(String userName, String userPassword) {
         for (UserClass user : users) {
             if((user.getEmail().equals(userName)) && (user.getPassword().equals(userPassword))) {
-//                Toast.makeText(this, "Log in successful", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(this, MainActivity.class);
                 intent.putExtra("userID", user.getId());
                 startActivity(intent);

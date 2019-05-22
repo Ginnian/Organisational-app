@@ -28,7 +28,7 @@ public class ScheduleFragment extends Fragment {
 
     private CalendarView calendar;
     private EditText eventEntry;
-    private TextView currentDate;
+    private TextView currentDate, subject;
     private FloatingActionButton floatingActionButton;
 
     ScheduleClass eventObj = new ScheduleClass();
@@ -44,20 +44,10 @@ public class ScheduleFragment extends Fragment {
         MainActivity mainActivity = (MainActivity) getActivity();
         final long userID = mainActivity.getUserID();
         long scheduleID = mainActivity.getScheduleID();
-        long journalID = mainActivity.getJournalID();
 
-        calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            @Override
-            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-                Log.d(TAG, "onSelectedDayChange: Retrieving the date from the calendar");
+        setDate();
 
-                currentDate.setText(dayOfMonth + "/" + month + "/" + year);
-                eventObj.setDate(dayOfMonth + "/" + month + "/" + year);
-            }
-        });
-
-
-        floatingActionButton.setEnabled(false);
+        //If event exists, update row
         if(scheduleID != 0) {
             //editing the schedule
             DatabaseHandler db = new DatabaseHandler(getActivity().getApplication());
@@ -70,11 +60,10 @@ public class ScheduleFragment extends Fragment {
             floatingActionButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    editSchedule.setEntry(eventEntry.getText().toString().trim());
-                    editSchedule.setDate(currentDate.getText().toString().trim());
-                    editSchedule.setSubject("default subject in development"); //debug
-
+                    Log.d(TAG, "onClick: Trying to update schedule");
+                    setScheduleDetails(editSchedule);
                     updateScheduleInDB(editSchedule);
+
                     Toast.makeText(getActivity().getApplicationContext(),
                             "Schedule updated", Toast.LENGTH_SHORT).show();
 
@@ -83,12 +72,16 @@ public class ScheduleFragment extends Fragment {
             });
 
             mainActivity.setScheduleID(0); //reset schedule id for future editing
-        } else {
+        } else { //if event does not exist, create new row
+            //disable save button on creation
+            floatingActionButton.setEnabled(false);
             //create a new schedule
             floatingActionButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    setScheduleDetails(eventObj);
                     saveScheduleToDB(userID);
+
                     Toast.makeText(getActivity().getApplicationContext(),
                             "New schedule added", Toast.LENGTH_SHORT).show();
 
@@ -120,23 +113,40 @@ public class ScheduleFragment extends Fragment {
 
         return v;
     }
+
+    private void setScheduleDetails(ScheduleClass schedule) {
+        schedule.setEntry(eventEntry.getText().toString().trim());
+        schedule.setDate(currentDate.getText().toString().trim());
+        schedule.setSubject("default location in development"); //debug
+    }
+
+    private void setDate() {
+        calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
+                Log.d(TAG, "onSelectedDayChange: Retrieving the date from the calendar");
+
+                currentDate.setText(dayOfMonth + "/" + month + "/" + year);
+                eventObj.setDate(dayOfMonth + "/" + month + "/" + year);
+            }
+        });
+    }
+
     public void findViews(View v) {
         calendar = v.findViewById(R.id.schedule_cv_events);
         eventEntry = v.findViewById(R.id.schedule_et_entry);
         currentDate = v.findViewById(R.id.schedule_tv_dateSelected);
         floatingActionButton = v.findViewById(R.id.schedule_fab_addSchedule);
-    }  //find view variables
+    }
 
     private void saveScheduleToDB(long userID) {
         Log.d(TAG, "saveJournalToDB: Saving schedule to database");
-        
-        DatabaseHandler dbhandler = new DatabaseHandler(getActivity().getApplicationContext());
-        dbhandler.insertSchedule(userID, eventObj.getEntry(), eventObj.getSubject(), eventObj.getDate());
+        DatabaseHandler db = new DatabaseHandler(getActivity().getApplicationContext());
+        db.insertSchedule(userID, eventObj.getEntry(), eventObj.getSubject(), eventObj.getDate());
     }
 
     private void updateScheduleInDB(ScheduleClass scheduleClass) {
         Log.d(TAG, "updateScheduleInDB: Trying to update a schedule entry");
-
         DatabaseHandler db = new DatabaseHandler(getActivity().getApplication());
         db.updateSchedule(scheduleClass);
     }
