@@ -19,7 +19,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String TAG = "DatabaseHandler";
 
     //database info
-    private static final int DB_VERSION = 1;
+    private static final int DB_VERSION = 2;
     private static final String DATABASE_NAME = "usersdb";
 
     public DatabaseHandler(Context context) {
@@ -32,6 +32,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL(UserClass.CREATE_TABLE);
         db.execSQL(JournalClass.CREATE_TABLE);
         db.execSQL(ScheduleClass.CREATE_TABLE);
+        db.execSQL(ToDoClass.CREATE_TABLE);
     }
 
     @Override
@@ -39,6 +40,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + UserClass.TABLE_USERS);
         db.execSQL("DROP TABLE IF EXISTS " + JournalClass.TABLE_JOURNAL);
         db.execSQL("DROP TABLE IF EXISTS " + ScheduleClass.TABLE_SCHEDULE);
+        db.execSQL("DROP TABLE IF EXISTS " + ToDoClass.TABLE_TODO);
         onCreate(db);
     }
 
@@ -56,10 +58,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         return newRowId; // row id
     }
-
-//    public  void createToDoListTable(String category, ArrayList<ToDoClass> toDoList) {
-//
-//    }
 
     public UserClass getUserByID(long id) {
         //debug
@@ -375,4 +373,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 new String[]{String.valueOf(schedule.getId())});
         db.close();
     }
+
+    //To do
+
+
 }
